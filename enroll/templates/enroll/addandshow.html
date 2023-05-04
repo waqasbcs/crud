@@ -1,0 +1,46 @@
+ {% extends 'enroll/base.html' %}
+ {% block content %}
+ <div class="row">
+  <div class="col-4">
+    <h1 class="text-center alert alert-info">  Add new student</h1>
+    <form action="" method="POST" novalidate>
+      {% csrf_token %}
+     {{form.as_p}}
+     <input type="submit" class="btn btn-dark" value="add">
+    </form>
+  </div>
+  <div class="col-7 offset-1">
+    <h1 class="text-center alert alert-info">  Show student information</h1>
+     {% if stu %}
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for st in stu %}
+      <tr>
+        <th scope="row">{{st.id}}</th>
+        <td>{{st.name}}</td>
+        <td>{{st.email}}</td>
+        <td>{{st.password}}    
+       
+        <td>
+        <a href="{% url 'update' st.id %}" class="btn btn-danger">Edit </a>  
+      <form action="{% url 'delete' st.id %}" method="post" novalidate class='d-inline'> {% csrf_token %}
+     <input type="submit"class="btn btn-dark" value="delete">
+     </form>           
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    {% endif %} 
+  </div>
+</div>
+ {% endblock content %}
